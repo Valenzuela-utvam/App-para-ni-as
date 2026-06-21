@@ -1,0 +1,10 @@
+# Ignorar el archivo HTML viejo o de respaldo
+estacion1.html
+
+# Ignorar todas las imágenes de fondo específicas
+background.jpeg
+background1.png
+bg1.png
+bg2.png
+bg3.png
+bg4.png
