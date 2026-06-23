@@ -10,20 +10,20 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Paleta neón adaptada al fondo oscuro bg5.jpeg */
   --primary:#34d399; --primary-dark:#6ee7b7; --on-primary:#eafff4;
   --primary-container:rgba(16,185,129,0.22);
   --secondary:#c084fc; --secondary-dark:#e9d5ff; --on-secondary:#f5ebff;
   --secondary-container:rgba(167,139,250,0.22);
   --tertiary:#fbbf24; --tertiary-dark:#fde68a; --on-tertiary:#fffbeb;
   --tertiary-container:rgba(251,191,36,0.20);
+  --mixto:#f472b6; --mixto-dark:#fbcfe8; --on-mixto:#fff0f7;
+  --mixto-container:rgba(244,114,182,0.22);
   --error:#fb7185; --error-container:rgba(248,113,113,0.22); --on-error:#fff1f2;
   --surface:rgba(8,10,22,0.82); --surface-high:rgba(20,22,40,0.85);
   --on-surface:#f1f4fb; --on-surface-var:#c7cbe0;
   --outline:#5b6184; --outline-var:#3a3f63;
 }
 
-/* ── FONDO ÚNICO (bg5.jpeg) ── */
 #bg-layer {
   position: fixed; inset: 0; z-index: -2;
   background-image: url('bg5.jpeg');
@@ -33,7 +33,6 @@
   background-attachment: fixed;
 }
 
-/* overlay oscuro suave para mantener legibilidad sin tapar el neón */
 body::after {
   content:''; position:fixed; inset:0; z-index:-1;
   background: rgba(2,3,10,0.40); pointer-events:none;
@@ -41,7 +40,6 @@ body::after {
 
 body { font-family:'Plus Jakarta Sans',sans-serif; color:var(--on-surface); min-height:100vh; }
 
-/* ── CONFETTI GLOBAL ── */
 #confetti-global {
   position:fixed; inset:0; pointer-events:none; z-index:999; overflow:hidden;
 }
@@ -54,18 +52,15 @@ body { font-family:'Plus Jakarta Sans',sans-serif; color:var(--on-surface); min-
   100%{ transform:translateY(105vh) rotate(720deg); opacity:0; }
 }
 
-/* ── SCREENS ── */
 .screen { display:none; min-height:100vh; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
 .screen.active { display:flex; }
 .screen > * { position:relative; z-index:1; }
 
-/* ── TYPE ── */
 .font-code { font-family:'Space Grotesk',sans-serif; font-weight:700; }
 h1 { font-size:36px; font-weight:800; line-height:1.2; letter-spacing:-0.02em; }
 h2 { font-size:28px; font-weight:800; line-height:1.2; }
 p  { font-size:18px; font-weight:500; line-height:1.6; }
 
-/* ── MISSION FRAME ── */
 .mission-frame {
   background:var(--surface); border:2px solid var(--outline-var);
   border-radius:16px; padding:2rem 2.5rem; width:100%; max-width:700px;
@@ -78,7 +73,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .mission-frame::before { top:-2px;left:-2px; border-width:3px 0 0 3px; border-radius:4px 0 0 0; }
 .mission-frame::after  { bottom:-2px;right:-2px; border-width:0 3px 3px 0; border-radius:0 0 4px 0; }
 
-/* ── BADGE ── */
 .badge {
   display:inline-flex; align-items:center; gap:6px;
   padding:6px 16px; border-radius:999px;
@@ -87,10 +81,10 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 }
 .badge-green  { background:var(--primary-container);   color:var(--on-primary);   border-color:var(--primary); }
 .badge-purple { background:var(--secondary-container); color:var(--on-secondary); border-color:var(--secondary); }
+.badge-pink   { background:var(--mixto-container);     color:var(--on-mixto);     border-color:var(--mixto); }
 .badge-amber  { background:var(--tertiary-container);  color:var(--on-tertiary);  border-color:var(--tertiary); }
 .badge-phase  { background:var(--surface-high); color:var(--on-surface-var); border-color:var(--outline); }
 
-/* ── BUTTONS ── */
 .btn {
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
   font-family:'Plus Jakarta Sans',sans-serif; font-size:18px; font-weight:700;
@@ -111,9 +105,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .icon { font-family:'Material Symbols Outlined'; font-style:normal; font-weight:400;
   font-variation-settings:'FILL' 1; line-height:1; display:inline-block; }
 
-/* ════════════════════════════════
-   P1 — BIENVENIDA
-════════════════════════════════ */
+/* ════════ P1 — BIENVENIDA ════════ */
 .robot-circle {
   width:160px; height:160px; border-radius:50%;
   background:rgba(20,22,40,0.7); border:4px solid rgba(167,139,250,0.6);
@@ -121,7 +113,9 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   display:flex; align-items:center; justify-content:center;
   margin:0 auto 1.5rem; font-size:86px;
 }
-.cat-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; width:100%; max-width:520px; }
+/* 3-column grid for category selection */
+.cat-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; width:100%; max-width:720px; }
+@media(max-width:600px){ .cat-grid { grid-template-columns:1fr; } }
 .cat-btn {
   border:2px solid; border-bottom-width:5px; border-radius:16px;
   padding:1.5rem 1rem; cursor:pointer; text-align:center;
@@ -130,21 +124,23 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   font-family:'Plus Jakarta Sans',sans-serif;
 }
 .cat-btn:active { transform:translateY(3px); border-bottom-width:2px; }
-.cat-alfa { background:rgba(251,146,60,0.18); border-color:#fb923c; backdrop-filter: blur(4px); }
-.cat-alfa:hover { background:rgba(251,146,60,0.30); }
-.cat-beta { background:var(--secondary-container); border-color:var(--secondary-dark); backdrop-filter: blur(4px); }
-.cat-beta:hover { background:rgba(192,132,252,0.32); }
+.cat-alfa  { background:rgba(251,146,60,0.18); border-color:#fb923c; backdrop-filter: blur(4px); }
+.cat-alfa:hover  { background:rgba(251,146,60,0.30); }
+.cat-beta  { background:var(--secondary-container); border-color:var(--secondary-dark); backdrop-filter: blur(4px); }
+.cat-beta:hover  { background:rgba(192,132,252,0.32); }
+.cat-mixto { background:var(--mixto-container); border-color:var(--mixto-dark); backdrop-filter: blur(4px); }
+.cat-mixto:hover { background:rgba(244,114,182,0.32); }
 .cat-btn .cat-icon { font-size:44px; line-height:1; }
-.cat-btn .cat-name { font-size:19px; font-weight:800; }
-.cat-btn .cat-age  { font-size:13px; font-weight:700; opacity:.85; font-family:'Space Grotesk',sans-serif; }
-.cat-alfa .cat-name { color:#ffd9b3; }
-.cat-alfa .cat-age  { color:#ffb877; }
-.cat-beta .cat-name { color:var(--on-secondary); }
-.cat-beta .cat-age  { color:var(--secondary-dark); }
+.cat-btn .cat-name { font-size:17px; font-weight:800; }
+.cat-btn .cat-age  { font-size:12px; font-weight:700; opacity:.85; font-family:'Space Grotesk',sans-serif; }
+.cat-alfa .cat-name  { color:#ffd9b3; }
+.cat-alfa .cat-age   { color:#ffb877; }
+.cat-beta .cat-name  { color:var(--on-secondary); }
+.cat-beta .cat-age   { color:var(--secondary-dark); }
+.cat-mixto .cat-name { color:var(--on-mixto); }
+.cat-mixto .cat-age  { color:var(--mixto-dark); }
 
-/* ════════════════════════════════
-   P2 — MISIÓN (FASE A)
-════════════════════════════════ */
+/* ════════ P2 — MISIÓN ════════ */
 .phase-header {
   display:flex; flex-direction:column; gap:10px;
   border-bottom:2px solid var(--outline-var); padding-bottom:1rem; margin-bottom:1.5rem;
@@ -162,10 +158,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .virus-alert .icon { color:var(--error); font-size:22px; flex-shrink:0; margin-top:2px; }
 .virus-alert p { font-size:15px; color:var(--on-error); }
 
-/* Modo virus */
-.virus-mode-row {
-  display:flex; gap:10px; margin:1.2rem 0 0.5rem; flex-wrap:wrap;
-}
+.virus-mode-row { display:flex; gap:10px; margin:1.2rem 0 0.5rem; flex-wrap:wrap; }
 .mode-btn {
   flex:1; min-width:120px; padding:12px 16px; border-radius:12px;
   border:2px solid var(--outline-var); border-bottom-width:4px;
@@ -182,7 +175,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .mode-btn.selected .mode-label { color:var(--on-secondary); }
 .mode-btn .mode-desc  { font-size:11px; font-weight:500; opacity:.85; text-align:center; color:var(--on-surface-var); }
 
-/* Minigrid selección */
+/* Mini tablero */
 .mini-grid-wrap { margin-top:0.75rem; }
 .mini-grid-label { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--on-surface-var); margin-bottom:6px; }
 .mini-grid-outer { display:flex; gap:6px; align-items:flex-start; }
@@ -205,7 +198,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .mini-col-labels span { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--on-surface-var); text-align:center; }
 .virus-count-info { font-size:12px; color:var(--on-surface-var); margin-top:6px; font-family:'Space Grotesk',sans-serif; font-weight:700; }
 
-/* Ruta staff */
+/* Staff ruta */
 .staff-zone { border-top:1.5px solid var(--outline-var); margin-top:1.5rem; padding-top:1rem; }
 .staff-toggle {
   background:none; border:none; cursor:pointer; display:flex; align-items:center; gap:8px;
@@ -230,9 +223,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .route-step.end   { border-color:var(--primary);  color:var(--on-primary);  background:var(--primary-container); }
 .route-arrow { color:var(--outline); font-size:16px; }
 
-/* ════════════════════════════════
-   P3 — TABLERO (FASE B)
-════════════════════════════════ */
+/* ════════ P3 — TABLERO ════════ */
 .board-wrapper { display:flex; gap:8px; align-items:flex-start; margin:1rem 0;
   background:rgba(8,9,20,0.55); border:1.5px solid var(--outline-var); border-radius:18px;
   padding:14px 16px; backdrop-filter: blur(8px); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
@@ -249,8 +240,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   display:flex; align-items:center; justify-content:center;
   font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700;
   color:#aab0d4; background:rgba(20,22,45,0.88); transition:background .2s;
-  backdrop-filter: blur(4px);
-  box-shadow:0 2px 10px rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px); box-shadow:0 2px 10px rgba(0,0,0,0.35);
 }
 .cell.start { background:var(--primary-container); color:var(--on-primary); border-color:var(--primary); font-size:9px; }
 .cell.end   { background:var(--tertiary-container); color:var(--on-tertiary); border-color:var(--tertiary); font-size:9px; }
@@ -262,9 +252,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--on-surface-var); }
 .legend-dot { width:14px; height:14px; border-radius:4px; flex-shrink:0; border:1.5px solid; }
 
-/* ════════════════════════════════
-   P4 — VALIDACIÓN
-════════════════════════════════ */
+/* ════════ P4 — VALIDACIÓN ════════ */
 .robot-big {
   font-size:96px; line-height:1; text-align:center;
   animation:float 3s ease-in-out infinite;
@@ -272,9 +260,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 }
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 
-/* ════════════════════════════════
-   P5 — RETO MATEMÁTICO
-════════════════════════════════ */
+/* ════════ P5 — RETO ════════ */
 .notebook-frame {
   background:var(--surface); border:3px dashed var(--primary); border-radius:20px;
   padding:1.75rem 2rem; width:100%; max-width:620px;
@@ -303,19 +289,33 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .feedback-ok { color:var(--on-primary); }
 .feedback-ko { color:var(--on-error); }
 
-/* Timer */
-.timer-ring-wrap { display:flex; justify-content:center; margin-bottom:.5rem; }
+/* Timer row with play/pause toggle */
+.timer-row {
+  display:flex; align-items:center; gap:14px; margin-bottom:.5rem;
+}
+.timer-toggle-btn {
+  background:var(--surface-high); border:2px solid var(--outline); border-bottom-width:4px;
+  border-radius:12px; padding:8px 14px; cursor:pointer;
+  font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700;
+  color:var(--on-surface-var); display:flex; align-items:center; gap:6px;
+  transition:all .12s;
+}
+.timer-toggle-btn:hover { border-color:var(--tertiary); color:var(--tertiary); }
+.timer-toggle-btn.active { border-color:var(--primary); color:var(--primary); background:var(--primary-container); }
+.timer-toggle-btn:active { transform:translateY(2px); border-bottom-width:2px; }
+.timer-toggle-btn .icon { font-size:18px; }
+
 .timer-ring { transform:rotate(0deg); }
 .timer-ring-track { fill:none; stroke:#e5e7eb; stroke-width:5; }
 .timer-ring-bar   { fill:none; stroke:var(--primary); stroke-width:5; stroke-linecap:round;
   stroke-dasharray:125.6; stroke-dashoffset:0; transition:stroke-dashoffset .9s linear, stroke .5s; }
 .timer-ring-bar.warn { stroke:var(--error); }
 .timer-num {
-  font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700;
+  font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700;
   fill:var(--on-surface); text-anchor:middle; dominant-baseline:central;
 }
 
-/* Progreso preguntas */
+/* Progreso */
 .progress-row { display:flex; gap:10px; justify-content:center; margin-bottom:1rem; }
 .prog-dot {
   width:40px; height:40px; border-radius:50%;
@@ -328,7 +328,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .prog-dot.correct { background:var(--primary-container); border-color:var(--primary); color:var(--on-primary); }
 .prog-dot.wrong   { background:var(--error-container); border-color:var(--error); color:var(--on-error); }
 
-/* Alerta de hackeo fallido (glitch) */
+/* Hackeo banner */
 .hackeo-banner {
   background:rgba(40,4,10,0.75); border:2px solid var(--error); border-radius:14px;
   padding:1.5rem 1.5rem; text-align:center; width:100%; max-width:560px; margin-bottom:1.25rem;
@@ -360,9 +360,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 }
 .hackeo-banner p  { font-size:15px; color:#ffe4e6; margin-top:.4rem; line-height:1.5; }
 
-/* ════════════════════════════════
-   P6 — FIN
-════════════════════════════════ */
+/* ════════ P6 — FIN ════════ */
 .trophy-icon {
   font-size:110px; line-height:1; text-align:center;
   filter:drop-shadow(0 0 16px rgba(251,191,36,.6));
@@ -374,19 +372,23 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 }
 .stars-row { display:flex; justify-content:center; gap:8px; margin-top:1rem; }
 .star { font-size:34px; animation:pulse-glow 2s ease-in-out infinite; }
+
+/* Mixto level tag on question */
+.level-tag {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:2px 10px; border-radius:999px; font-size:11px; font-weight:800;
+  font-family:'Space Grotesk',sans-serif; margin-bottom:6px; border:1.5px solid;
+}
+.level-alfa { background:rgba(251,146,60,0.22); color:#ffd9b3; border-color:#fb923c; }
+.level-beta { background:var(--secondary-container); color:var(--on-secondary); border-color:var(--secondary); }
 </style>
 </head>
 <body>
 
-<!-- ── FONDO ROTATIVO ── -->
 <div id="bg-layer" data-img="0"></div>
-
-<!-- ── CONFETTI GLOBAL ── -->
 <div id="confetti-global"></div>
 
-<!-- ══════════════════════════════════════
-     P1 — BIENVENIDA
-══════════════════════════════════════ -->
+<!-- ══ P1 — BIENVENIDA ══ -->
 <div id="s-bienvenida" class="screen active">
   <div class="badge badge-green font-code" style="margin-bottom:1.5rem">
     <span class="icon" style="font-size:15px">memory</span> Estación 1
@@ -394,26 +396,29 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   <h1 style="text-align:center;margin-bottom:.25rem">El Laberinto de los</h1>
   <h1 style="color:var(--on-secondary);text-align:center;margin-bottom:1.75rem">Algoritmos</h1>
   <div class="robot-circle" aria-hidden="true">🤖</div>
-  <p style="text-align:center;max-width:400px;margin-bottom:2rem">
+  <p style="text-align:center;max-width:480px;margin-bottom:2rem">
     ¡Bienvenidas, ingenieras! Seleccionen la categoría de su equipo.
   </p>
   <div class="cat-grid">
     <button class="cat-btn cat-alfa" onclick="elegirCategoria('alfa')">
       <span class="cat-icon">⭐</span>
       <span class="cat-name">Categoría Alfa</span>
-      <span class="cat-age">(6 – 8 años)</span>
+      <span class="cat-age">6 – 8 años</span>
+    </button>
+    <button class="cat-btn cat-mixto" onclick="elegirCategoria('mixto')">
+      <span class="cat-icon">🌟</span>
+      <span class="cat-name">Categoría Mixto</span>
+      <span class="cat-age">6 – 12 años</span>
     </button>
     <button class="cat-btn cat-beta" onclick="elegirCategoria('beta')">
       <span class="cat-icon">🚀</span>
       <span class="cat-name">Categoría Beta</span>
-      <span class="cat-age">(9 – 12 años)</span>
+      <span class="cat-age">9 – 12 años</span>
     </button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     P2 — MISIÓN (FASE A)
-══════════════════════════════════════ -->
+<!-- ══ P2 — MISIÓN ══ -->
 <div id="s-mision" class="screen">
   <div class="mission-frame">
     <div class="phase-header">
@@ -425,12 +430,11 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
     </div>
 
     <p class="mission-text" id="mission-text-p">
-  ¡Ingenieras! Su Robot puede iniciar en cualquier casilla de la fila A.
-  La columna de inicio se elegirá al azar. Debe llegar a
-  <span class="highlight-cell">E5</span>.
+      ¡Ingenieras! Su Robot puede iniciar en cualquier casilla de la fila A.
+      La columna de inicio se elegirá al azar. Debe llegar a
+      <span class="highlight-cell">E5</span>.
     </p>
 
-    <!-- Selector modo virus -->
     <p style="font-size:14px;font-weight:700;color:var(--on-surface-var);margin-top:1.25rem;margin-bottom:.4rem;font-family:'Space Grotesk',sans-serif;">
       UBICACIÓN DE LOS VIRUS
     </p>
@@ -447,7 +451,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
       </button>
     </div>
 
-    <!-- Info virus random -->
     <div id="virus-random-info" class="virus-alert" style="margin-top:.75rem">
       <span class="icon">casino</span>
       <div>
@@ -458,7 +461,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
       </div>
     </div>
 
-    <!-- Mini tablero elección -->
     <div id="virus-eleccion-info" style="display:none;margin-top:.75rem">
       <div class="mini-grid-wrap">
         <p class="mini-grid-label">Toca las celdas para colocar hasta 2 virus (no puedes seleccionar la fila A ni E5):</p>
@@ -477,7 +479,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
       </div>
     </div>
 
-    <!-- Ruta staff -->
     <div class="staff-zone">
       <button class="staff-toggle" onclick="toggleRuta()" id="btn-ruta">
         <span class="icon" id="ruta-icon" style="font-variation-settings:'FILL' 0">lock</span>
@@ -494,9 +495,8 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
     <button class="btn btn-neutral" onclick="irA('s-bienvenida')">
       <span class="icon" style="font-size:18px;font-variation-settings:'FILL' 0">arrow_back</span> Inicio
     </button>
-    <!-- BOTÓN CENTRAL: robot ubicado en su casilla de inicio -->
     <button class="btn btn-secondary" onclick="irA('s-validar')">
-      <span class="icon" style="font-size:18px">robot_2</span> Robot llego a la meta.
+      <span class="icon" style="font-size:18px">robot_2</span> Robot llegó a la meta.
     </button>
     <button class="btn btn-primary" onclick="irA('s-tablero')">
       Ver tablero <span class="icon" style="font-size:18px;font-variation-settings:'FILL' 0">arrow_forward</span>
@@ -504,9 +504,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     P3 — TABLERO (FASE B)
-══════════════════════════════════════ -->
+<!-- ══ P3 — TABLERO ══ -->
 <div id="s-tablero" class="screen">
   <span class="badge badge-phase font-code" style="margin-bottom:1rem">
     <span class="icon" style="font-size:13px">map</span> Fase B — Programación en el piso
@@ -542,17 +540,13 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     P4 — VALIDACIÓN
-══════════════════════════════════════ -->
+<!-- ══ P4 — VALIDACIÓN ══ -->
 <div id="s-validar" class="screen">
   <span class="badge badge-green font-code" style="margin-bottom:1.5rem">
     <span class="icon" style="font-size:14px">star</span> ¡Nivel superado!
   </span>
   <div class="robot-big" aria-hidden="true">🤖</div>
   <div class="mission-frame" style="text-align:center;margin-top:1.5rem">
-    <div style="position:absolute;top:-2px;left:-2px;width:26px;height:26px;border-top:3px solid var(--primary);border-left:3px solid var(--primary);border-radius:4px 0 0 0;opacity:.5"></div>
-    <div style="position:absolute;bottom:-2px;right:-2px;width:26px;height:26px;border-bottom:3px solid var(--primary);border-right:3px solid var(--primary);border-radius:0 0 4px 0;opacity:.5"></div>
     <h2>¡Evadieron los virus!</h2>
     <p style="margin-top:.75rem;color:var(--on-surface-var)">
       ¡Felicidades! Ahora introduzcan el código matemático final para liberar el sistema.
@@ -568,32 +562,32 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     P5 — RETO MATEMÁTICO
-══════════════════════════════════════ -->
+<!-- ══ P5 — RETO ══ -->
 <div id="s-reto" class="screen">
   <span class="badge badge-phase font-code" style="margin-bottom:.5rem">
     <span class="icon" style="font-size:13px">edit_note</span> Fase C — Código matemático
   </span>
   <span id="reto-cat-badge" class="badge badge-green font-code" style="margin-bottom:1rem">Categoría Alfa</span>
 
-  <!-- Progreso 3 preguntas -->
   <div class="progress-row" id="progress-row">
     <div class="prog-dot pending" id="dot-0">1</div>
     <div class="prog-dot pending" id="dot-1">2</div>
     <div class="prog-dot pending" id="dot-2">3</div>
   </div>
 
-  <!-- Timer (solo Beta) -->
-  <div class="timer-ring-wrap" id="timer-wrap" style="display:none">
-    <svg width="60" height="60" class="timer-ring" viewBox="0 0 46 46">
+  <!-- Timer row: ring + play/pause toggle -->
+  <div class="timer-row" id="timer-wrap" style="display:none">
+    <svg width="120" height="120" class="timer-ring" viewBox="0 0 46 46">
       <circle class="timer-ring-track" cx="23" cy="23" r="20"/>
       <circle class="timer-ring-bar" id="timer-bar" cx="23" cy="23" r="20"/>
-      <text class="timer-num" id="timer-num" x="23" y="23">20</text>
+      <text class="timer-num" id="timer-num" x="23" y="23">30</text>
     </svg>
+    <button class="timer-toggle-btn" id="btn-timer-toggle" onclick="toggleTimer()">
+      <span class="icon" id="timer-toggle-icon">play_circle</span>
+      <span id="timer-toggle-label">Activar contador</span>
+    </button>
   </div>
 
-  <!-- Banner hackeo (alerta visual, arriba de la tarjeta) -->
   <div class="hackeo-banner" id="hackeo-banner" style="display:none">
     <span class="hackeo-icon">🚨</span>
     <h3>¡EL HACKEO FUE DENEGADO!</h3>
@@ -602,6 +596,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 
   <div class="notebook-frame">
     <p class="notebook-label">&gt; PREGUNTA_DEL_DÍA</p>
+    <div id="level-tag-wrap"></div>
     <p id="reto-titulo" style="font-size:12px;color:var(--on-surface-var);margin-bottom:5px;font-family:'Space Grotesk',sans-serif;font-weight:700"></p>
     <p class="reto-question" id="reto-pregunta"></p><span class="cursor">_</span>
   </div>
@@ -619,9 +614,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     P6 — FIN
-══════════════════════════════════════ -->
+<!-- ══ P6 — FIN ══ -->
 <div id="s-fin" class="screen">
   <div class="trophy-icon" aria-hidden="true">🏆</div>
   <div class="mission-frame" style="text-align:center;margin-top:1.5rem">
@@ -640,25 +633,42 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════ -->
 <script>
-/* ── DATOS ── */
+/* ══════════════════════════════════
+   BANCO DE PREGUNTAS
+══════════════════════════════════ */
 const RETOS = {
   alfa: [
-    {titulo:"Reto de las figuras",        pregunta:"Sumen los lados de un triángulo (3) más los lados de un cuadrado (4). ¿Cuál es el número secreto?", correcta:7,  opciones:[5,7,9]},
-    {titulo:"Reto de la dulcería",         pregunta:"El sistema tiene 9 archivos y borramos 4 con virus. ¿Cuántos archivos limpios quedan?",              correcta:5,  opciones:[4,5,6]},
-    {titulo:"Reto del conteo rápido",      pregunta:"Completen la serie: 2, 4, 6, [ ? ], 10. ¿Qué número falta?",                                        correcta:8,  opciones:[7,8,9]},
-    {titulo:"Reto de las patas",           pregunta:"En una granja digital hay 2 vacas y 1 gallina. ¿Cuántas patas hay en total?",                         correcta:10, opciones:[8,10,12]},
-    {titulo:"Reto del revés",              pregunta:"A las dos decenas (20) le quitamos 5 unidades. ¿Con qué número nos quedamos?",                        correcta:15, opciones:[14,15,16]},
-    {titulo:"Reto de los dados",           pregunta:"Un dado cayó en 6 y otro en 5. ¿Cuál es la contraseña?",                                             correcta:11, opciones:[10,11,12]},
-    {titulo:"Reto de los insectos",        pregunta:"Una araña tiene 8 patas y una hormiga tiene 6. ¿Cuántas patas tienen juntas?",                        correcta:14, opciones:[12,14,16]},
-    {titulo:"Reto de la serie 5 en 5",    pregunta:"Encuentren el número escondido: 5, 10, 15, [ ? ], 25.",                                              correcta:20, opciones:[18,20,22]},
-    {titulo:"Reto de las manos",           pregunta:"Los 10 dedos de una niña más los 5 dedos de una mano de su compañera. ¿Cuántos dedos hay en total?", correcta:15, opciones:[13,15,20]},
-    {titulo:"Reto del doble",              pregunta:"El código secreto es el doble del número 9. ¿Qué número deben escribir?",                             correcta:18, opciones:[16,18,20]}
+    // Preguntas originales
+    {titulo:"Reto de las figuras",       pregunta:"Sumen los lados de un triángulo (3) más los lados de un cuadrado (4). ¿Cuál es el número secreto?", correcta:7,  opciones:[5,7,9]},
+    {titulo:"Reto de la dulcería",        pregunta:"El sistema tiene 9 archivos y borramos 4 con virus. ¿Cuántos archivos limpios quedan?",              correcta:5,  opciones:[4,5,6]},
+    {titulo:"Reto del conteo rápido",     pregunta:"Completen la serie: 2, 4, 6, [ ? ], 10. ¿Qué número falta?",                                        correcta:8,  opciones:[7,8,9]},
+    {titulo:"Reto de las patas",          pregunta:"En una granja digital hay 2 vacas y 1 gallina. ¿Cuántas patas hay en total?",                         correcta:10, opciones:[8,10,12]},
+    {titulo:"Reto del revés",             pregunta:"A las dos decenas (20) le quitamos 5 unidades. ¿Con qué número nos quedamos?",                        correcta:15, opciones:[14,15,16]},
+    {titulo:"Reto de los dados",          pregunta:"Un dado cayó en 6 y otro en 5. ¿Cuál es la contraseña?",                                             correcta:11, opciones:[10,11,12]},
+    {titulo:"Reto de los insectos",       pregunta:"Una araña tiene 8 patas y una hormiga tiene 6. ¿Cuántas patas tienen juntas?",                        correcta:14, opciones:[12,14,16]},
+    {titulo:"Reto de la serie 5 en 5",   pregunta:"Encuentren el número escondido: 5, 10, 15, [ ? ], 25.",                                              correcta:20, opciones:[18,20,22]},
+    {titulo:"Reto de las manos",          pregunta:"Los 10 dedos de una niña más los 5 dedos de una mano de su compañera. ¿Cuántos dedos hay en total?", correcta:15, opciones:[13,15,20]},
+    {titulo:"Reto del doble",             pregunta:"El código secreto es el doble del número 9. ¿Qué número deben escribir?",                             correcta:18, opciones:[16,18,20]},
+    // Preguntas nuevas del PDF
+    {titulo:"Reto de la suma",        pregunta:"5 + 5 = ?",                                                                                          correcta:10, opciones:[9,10,11]},
+    {titulo:"Reto de la resta",           pregunta:"8 − 3 = ?",                                                                                          correcta:5,  opciones:[4,5,6]},
+    {titulo:"Reto de la suma",              pregunta:"6 + 2 = ?",                                                                                           correcta:8,  opciones:[7,8,9]},
+    {titulo:"Reto de la resta",     pregunta:"10 − 4 = ?",                                                                                          correcta:6,  opciones:[5,6,7]},
+    {titulo:"Reto de la suma",              pregunta:"3 + 4 = ?",                                                                                           correcta:7,  opciones:[6,7,8]},
+    {titulo:"Reto de la resta",      pregunta:"7 − 2 = ?",                                                                                           correcta:5,  opciones:[4,5,6]},
+    {titulo:"Reto de la suma",              pregunta:"9 + 3 = ?",                                                                                           correcta:12, opciones:[11,12,13]},
+    {titulo:"Reto de la resta",     pregunta:"12 − 5 = ?",                                                                                          correcta:7,  opciones:[6,7,8]},
+    {titulo:"Reto de la suma",              pregunta:"4 + 4 = ?",                                                                                           correcta:8,  opciones:[7,8,9]},
+    {titulo:"Reto de la resta",    pregunta:"15 − 10 = ?",                                                                                         correcta:5,  opciones:[5,10,15]},
+    {titulo:"Reto del cuadrado",         pregunta:"¿Cuántos lados tiene un cuadrado?",                                                                    correcta:4,  opciones:[3,4,5]},
+    {titulo:"Reto del triángulo",        pregunta:"¿Cuántas esquinas (vértices) tiene un triángulo?",                                                     correcta:3,  opciones:[2,3,4]},
+    {titulo:"Reto de serie",    pregunta:"Completa la serie: 2, 4, 6, __, 10.",                                                                 correcta:8,  opciones:[7,8,9]},
+    {titulo:"Reto de serie",  pregunta:"Completa la serie: 5, 10, 15, __, 25.",                                                               correcta:20, opciones:[16,20,30]},
+    {titulo:"Reto del doble de 3",       pregunta:"¿Qué número es el doble de 3?",                                                                       correcta:6,  opciones:[5,6,9]}
   ],
   beta: [
+    // Preguntas originales
     {titulo:"Reto de la serie",             pregunta:"Parcheen la red: 3, 6, 9, [ ? ], 15, 18. ¿Qué número falta?",                                        correcta:12, opciones:[10,11,12]},
     {titulo:"Reto de las mitades",          pregunta:"El servidor tiene 100 gigas. El sistema usa 50 y los juegos usan 25. ¿Cuántos gigas libres quedan?",  correcta:25, opciones:[20,25,30]},
     {titulo:"Reto del reparto",             pregunta:"45 contraseñas entre 5 carpetas en partes iguales. ¿Cuántas van en cada carpeta?",                    correcta:9,  opciones:[7,9,11]},
@@ -668,85 +678,106 @@ const RETOS = {
     {titulo:"Reto del triple",              pregunta:"Para desactivar la alarma: el triple de 15.",                                                          correcta:45, opciones:[30,45,60]},
     {titulo:"Reto de las manzanas",         pregunta:"Hay 12 manzanas. El equipo se come la mitad y regala 2 más. ¿Cuántas quedan?",                        correcta:4,  opciones:[4,6,8]},
     {titulo:"Reto de la cuenta regresiva",  pregunta:"Completen la serie: 40, 32, 24, [ ? ], 8. ¿Qué número falta?",                                       correcta:16, opciones:[14,16,18]},
-    {titulo:"Reto del número misterioso",   pregunta:"Piensen en un número: multiplicado por 4 da 36. ¿De qué número se trata?",                            correcta:9,  opciones:[7,8,9]}
+    {titulo:"Reto del número misterioso",   pregunta:"Piensen en un número: multiplicado por 4 da 36. ¿De qué número se trata?",                            correcta:9,  opciones:[7,8,9]},
+    // Preguntas nuevas del PDF
+    {titulo:"Reto de multiplicación",                    pregunta:"7 × 6 = ?",                                                                                            correcta:42, opciones:[36,42,48]},
+    {titulo:"Reto de división",                   pregunta:"32 ÷ 8 = ?",                                                                                           correcta:4,  opciones:[3,4,5]},
+    {titulo:"Reto de multiplicación",                    pregunta:"9 × 5 = ?",                                                                                            correcta:45, opciones:[40,45,50]},
+    {titulo:"Reto de división",                   pregunta:"54 ÷ 6 = ?",                                                                                           correcta:9,  opciones:[7,9,11]},
+    {titulo:"Reto de multiplicación",                   pregunta:"12 × 4 = ?",                                                                                           correcta:48, opciones:[42,48,56]},
+    {titulo:"Reto de división",                  pregunta:"100 ÷ 5 = ?",                                                                                          correcta:20, opciones:[15,20,25]},
+    {titulo:"Reto de la serie",     pregunta:"Completa la serie: 4, 8, 12, __, 20.",                                                                 correcta:16, opciones:[14,16,18]},
+    {titulo:"Reto serie regresiva 30,25",  pregunta:"Completa la serie hacia atrás: 30, 25, 20, __, 10.",                                                   correcta:15, opciones:[12,15,18]},
+    {titulo:"Reto de la mitad de 80",      pregunta:"¿Cuánto es la mitad de 80?",                                                                           correcta:40, opciones:[35,40,45]},
+    {titulo:"Reto de la tercera parte",    pregunta:"¿Cuánto es la tercera parte de 30?",                                                                   correcta:10, opciones:[8,10,12]},
+    {titulo:"Reto de las monedas",         pregunta:"Si tengo 3 monedas de $10 y 4 monedas de $5, ¿cuánto dinero tengo?",                                  correcta:50, opciones:[40,50,60]},
+    {titulo:"Reto del cuarto de hora",     pregunta:"¿Cuántos minutos hay en un cuarto de hora (1/4 de hora)?",                                             correcta:15, opciones:[10,15,20]},
+    {titulo:"Reto del área",               pregunta:"Si un rectángulo mide 5 cm de base y 3 cm de altura, ¿cuál es su área?",                               correcta:15, opciones:[10,15,20]},
+    {titulo:"Reto del triple misterioso",  pregunta:"El triple de un número es 21. ¿Cuál es ese número?",                                                   correcta:7,  opciones:[6,7,8]},
+    {titulo:"Reto de suma y resta",              pregunta:"15 + 15 − 10 = ?",                                                                                     correcta:20, opciones:[15,20,25]}
   ]
 };
 
-/* ── ESTADO ── */
+// Mixto: mezcla aleatoria de preguntas de ambas categorías, con etiqueta de nivel
+function generarBancoMixto() {
+  const alfaTag = RETOS.alfa.map(r => ({...r, nivel:'alfa'}));
+  const betaTag = RETOS.beta.map(r => ({...r, nivel:'beta'}));
+  return shuffle([...alfaTag, ...betaTag]);
+}
+
+/* ══ ESTADO ══ */
 let categoria = 'alfa';
-let virusPositions = ['B2','C4'];   // default
+let virusPositions = ['B2','C4'];
 let virusMode = 'random';
 let usadosReto = [];
-let preguntaIdx = 0;           // índice dentro de retosRonda
-let retosRonda = [];           // 3 retos seleccionados para la ronda
-let respuestasRonda = [];      // true/false por pregunta
+let preguntaIdx = 0;
+let retosRonda = [];
+let respuestasRonda = [];
 let timerInterval = null;
-let timerSeg = 20;
+let timerSeg = 30;
 let esperandoNext = false;
+let timerActivo = false;    // si el contador está corriendo (solo beta/mixto)
+let timerEnPausa = false;   // si el usuario lo pausó manualmente
 
-/* (Fondo único: bg5.jpeg — ya no se necesita rotación) */
-
-/* ── CONFETTI MATEMÁTICO PERMANENTE ── */
+/* ══ CONFETTI ══ */
 (function initConfetti() {
   const c = document.getElementById('confetti-global');
-  const colors = ['#6ee7b7','#c084fc','#fde047','#93c5fd','#f9a8d4','#fb923c'];
+  const colors = ['#6ee7b7','#c084fc','#fde047','#93c5fd','#f9a8d4','#fb923c','#f472b6'];
   const simbolos = ['+','−','×','÷','=','0','1','2','3','4','5','6','7','8','9','○','△','□'];
   for (let i = 0; i < 55; i++) {
     const p = document.createElement('div');
     p.className = 'cp';
     p.textContent = simbolos[Math.floor(Math.random()*simbolos.length)];
-    const size = Math.random()*8 + 12; // tamaño de fuente, chico pero legible
-    p.style.cssText = `
-      color:${colors[i%colors.length]};
-      left:${Math.random()*100}%;
-      font-size:${size}px;
-      font-family:'Space Grotesk',sans-serif; font-weight:700;
-      text-shadow:0 0 6px currentColor;
-      animation-duration:${Math.random()*4+3}s;
-      animation-delay:${Math.random()*6}s;
-    `;
+    const size = Math.random()*8 + 12;
+    p.style.cssText = `color:${colors[i%colors.length]};left:${Math.random()*100}%;font-size:${size}px;font-family:'Space Grotesk',sans-serif;font-weight:700;text-shadow:0 0 6px currentColor;animation-duration:${Math.random()*4+3}s;animation-delay:${Math.random()*6}s;`;
     c.appendChild(p);
   }
 })();
 
-/* ── NAVEGACIÓN ── */
+/* ══ NAVEGACIÓN ══ */
 function irA(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
 
-/* ── CATEGORÍA ── */
+/* ══ CATEGORÍA ══ */
 function elegirCategoria(cat) {
   categoria = cat;
   usadosReto = [];
   const badge = document.getElementById('badge-cat');
-  badge.textContent = cat==='alfa' ? '⭐ Categoría Alfa — 6 a 8 años' : '🚀 Categoría Beta — 9 a 12 años';
-  badge.className   = cat==='alfa' ? 'badge badge-green font-code' : 'badge badge-purple font-code';
+  if (cat==='alfa') {
+    badge.textContent = '⭐ Categoría Alfa — 6 a 8 años';
+    badge.className = 'badge badge-green font-code';
+  } else if (cat==='beta') {
+    badge.textContent = '🚀 Categoría Beta — 9 a 12 años';
+    badge.className = 'badge badge-purple font-code';
+  } else {
+    badge.textContent = '🌟 Categoría Mixto — 6 a 12 años';
+    badge.className = 'badge badge-pink font-code';
+  }
   document.getElementById('ruta-box').classList.remove('visible');
   document.getElementById('ruta-icon').textContent = 'lock';
   document.getElementById('ruta-label').textContent = 'Staff — mostrar ruta sugerida';
-  // reset virus a default
   virusPositions = ['B2','C4'];
   setMode('random');
   construirMiniTablero();
-  asignarInicioAleatorio(); // elige columna de salida al azar y refresca texto + tablero
+  asignarInicioAleatorio();
   irA('s-mision');
 }
 
-let columnaInicio = 1; // columna elegida al azar en fila A
+let columnaInicio = 1;
 
 function asignarInicioAleatorio() {
-  columnaInicio = Math.floor(Math.random() * 5) + 1; // 1 a 5
-  // Actualizar texto de misión
+  columnaInicio = Math.floor(Math.random() * 5) + 1;
   const txt = document.getElementById('mission-text-p');
-if (txt) {
-  txt.innerHTML = `¡Ingenieras! Su Robot inicia en <span class="highlight-cell" style="background:#fde68a;border:2px solid #d97706;color:#78350f">A${columnaInicio}</span> — posición elegida al azar de la fila A. Debe llegar a <span class="highlight-cell">E5</span>.`;
-}
-  construirTablero(); // actualizar tablero con inicio resaltado
+  if (txt) {
+    txt.innerHTML = `¡Ingenieras! Su Robot inicia en <span class="highlight-cell" style="background:#fde68a;border:2px solid #d97706;color:#78350f">A${columnaInicio}</span> — posición elegida al azar de la fila A. Debe llegar a <span class="highlight-cell">E5</span>.`;
+  }
+  construirTablero();
 }
 
-/* ── MODO VIRUS ── */
+/* ══ MODO VIRUS ══ */
 function setMode(mode) {
   virusMode = mode;
   document.getElementById('btn-random').classList.toggle('selected', mode==='random');
@@ -777,7 +808,7 @@ function actualizarVirusInfo() {
   actualizarRutaStaff();
 }
 
-/* ── MINI TABLERO ELECCIÓN ── */
+/* ══ MINI TABLERO ══ */
 let virusEleccion = [];
 
 function construirMiniTablero() {
@@ -820,14 +851,14 @@ function toggleVirusEleccion(coord, cell) {
   actualizarRutaStaff();
 }
 
-/* ── RUTA STAFF (BFS simple) ── */
+/* ══ RUTA BFS ══ */
 function actualizarRutaStaff() {
   const ruta = calcularRuta(virusPositions);
   const cont = document.getElementById('route-steps-display');
   cont.innerHTML = '';
   ruta.forEach((paso,i) => {
     const d = document.createElement('div');
-    d.className = 'route-step' + (paso==='A1'?' start':(paso==='E5'?' end':''));
+    d.className = 'route-step' + (paso==='A'+columnaInicio?' start':(paso==='E5'?' end':''));
     d.textContent = paso;
     cont.appendChild(d);
     if (i < ruta.length-1) {
@@ -839,7 +870,6 @@ function actualizarRutaStaff() {
 }
 
 function calcularRuta(virus) {
-  // BFS en grilla 5x5
   const filas = ['A','B','C','D','E'];
   const idx = c => filas.indexOf(c);
   const coord = (f,c) => filas[f]+c;
@@ -864,7 +894,6 @@ function calcularRuta(virus) {
   return [start,'(sin ruta segura)',end];
 }
 
-/* ── RUTA TOGGLE ── */
 function toggleRuta() {
   actualizarRutaStaff();
   const box = document.getElementById('ruta-box');
@@ -876,52 +905,85 @@ function toggleRuta() {
   label.textContent = visible ? 'Staff — ocultar ruta sugerida' : 'Staff — mostrar ruta sugerida';
 }
 
-/* ── TABLERO GRANDE ── */
+/* ══ TABLERO GRANDE ══ */
 function construirTablero() {
-  const ruta   = calcularRuta(virusPositions);
+  const ruta    = calcularRuta(virusPositions);
   const rutaSet = new Set(ruta);
-  const filas  = ['E','D','C','B','A'];
+  const filas   = ['E','D','C','B','A'];
   const t = document.getElementById('tablero');
   t.innerHTML = '';
   filas.forEach(f => {
     [1,2,3,4,5].forEach(c => {
       const coord = f+c;
       const cell = document.createElement('div');
-      const isStartRow = coord === 'A'+columnaInicio;
-      if      (coord==='E5')                  cell.className='cell end';
-      else if (virusPositions.includes(coord)) cell.className='cell virus';
-      else if (isStartRow)                    cell.className='cell start';
-      else if (rutaSet.has(coord))            cell.className='cell path';
-      else                                    cell.className='cell';
-      if      (coord==='E5')                  cell.textContent='META';
-      else if (virusPositions.includes(coord)) cell.textContent='☠';
-      else if (isStartRow)                    cell.textContent=coord;
-      else if (rutaSet.has(coord))            cell.textContent=coord;
-      else                                    cell.textContent=coord;
+      const isStartCell = coord === 'A'+columnaInicio;
+      if      (coord==='E5')                   cell.className='cell end';
+      else if (virusPositions.includes(coord))  cell.className='cell virus';
+      else if (isStartCell)                     cell.className='cell start';
+      else if (rutaSet.has(coord))              cell.className='cell path';
+      else                                      cell.className='cell';
+      if      (coord==='E5')                   cell.textContent='META';
+      else if (virusPositions.includes(coord))  cell.textContent='☠';
+      else                                      cell.textContent=coord;
       t.appendChild(cell);
     });
   });
 }
 
-/* ── RETO: INICIO ── */
+/* ══ RETO: INICIO ══ */
 function iniciarReto() {
   preguntaIdx = 0;
   respuestasRonda = [];
-  // Elegir 3 retos sin repetir
-  const lista = RETOS[categoria];
-  if (usadosReto.length + 3 > lista.length) usadosReto = [];
-  const disponibles = lista.map((_,i)=>i).filter(i=>!usadosReto.includes(i));
-  shuffle(disponibles);
-  retosRonda = disponibles.slice(0,3).map(i=>lista[i]);
-  retosRonda.forEach(r => usadosReto.push(lista.indexOf(r)));
+  timerEnPausa = false;
+
+  // Elegir 3 retos
+  let lista;
+  if (categoria === 'mixto') {
+    lista = generarBancoMixto();
+    // usadosReto no aplica igual, reiniciar siempre para mixto
+    usadosReto = [];
+    shuffle(lista);
+    retosRonda = lista.slice(0, 3);
+  } else {
+    lista = RETOS[categoria];
+    if (usadosReto.length + 3 > lista.length) usadosReto = [];
+    const disponibles = lista.map((_,i)=>i).filter(i=>!usadosReto.includes(i));
+    shuffle(disponibles);
+    retosRonda = disponibles.slice(0,3).map(i=>lista[i]);
+    retosRonda.forEach(r => usadosReto.push(lista.indexOf(r)));
+  }
 
   // Badge
   const badge = document.getElementById('reto-cat-badge');
-  badge.textContent = categoria==='alfa' ? '⭐ Categoría Alfa' : '🚀 Categoría Beta';
-  badge.className   = categoria==='alfa' ? 'badge badge-green font-code' : 'badge badge-purple font-code';
+  if (categoria==='alfa') {
+    badge.textContent = '⭐ Categoría Alfa';
+    badge.className = 'badge badge-green font-code';
+  } else if (categoria==='beta') {
+    badge.textContent = '🚀 Categoría Beta';
+    badge.className = 'badge badge-purple font-code';
+  } else {
+    badge.textContent = '🌟 Categoría Mixto';
+    badge.className = 'badge badge-pink font-code';
+  }
 
-  // Timer solo Beta
-  document.getElementById('timer-wrap').style.display = categoria==='beta' ? 'flex' : 'none';
+  // Timer: visible para beta y mixto
+  const timerWrap = document.getElementById('timer-wrap');
+  if (categoria === 'alfa') {
+    timerWrap.style.display = 'none';
+  } else if (categoria === 'beta') {
+    // Beta: timer arranca solo, sin botón play/pausa
+    timerWrap.style.display = 'flex';
+    timerActivo = true;
+    document.getElementById('btn-timer-toggle').style.display = 'none';
+    resetTimerUI();
+  } else {
+    // Mixto: timer inicia pausado, staff lo activa
+    timerWrap.style.display = 'flex';
+    timerActivo = false;
+    document.getElementById('btn-timer-toggle').style.display = 'inline-flex';
+    resetTimerUI();
+    actualizarBtnTimer();
+  }
 
   // Reset progreso
   [0,1,2].forEach(i => {
@@ -950,6 +1012,16 @@ function mostrarPregunta() {
   document.getElementById('feedback').textContent      = '';
   document.getElementById('feedback').className        = 'feedback-msg';
 
+  // Etiqueta de nivel para mixto
+  const tagWrap = document.getElementById('level-tag-wrap');
+  tagWrap.innerHTML = '';
+  if (categoria === 'mixto' && reto.nivel) {
+    const tag = document.createElement('span');
+    tag.className = `level-tag level-${reto.nivel}`;
+    tag.textContent = reto.nivel === 'alfa' ? '⭐ Nivel Alfa (6-8 años)' : '🚀 Nivel Beta (9-12 años)';
+    tagWrap.appendChild(tag);
+  }
+
   const cont = document.getElementById('opciones-container');
   cont.innerHTML = '';
   shuffle([...reto.opciones]).forEach(op => {
@@ -960,14 +1032,49 @@ function mostrarPregunta() {
     cont.appendChild(b);
   });
 
-  if (categoria==='beta') startTimer();
+  // Timer por categoría
+  if (categoria === 'beta') {
+    startTimer();
+  } else if (categoria === 'mixto') {
+    if (timerActivo) startTimer();
+    else resetTimerUI();
+  }
 }
 
-/* ── TIMER ── */
-const TIMER_TOTAL = 20;
-const CIRCUNF = 2 * Math.PI * 20; // r=20 → ≈125.6
+/* ══ TIMER: PLAY/PAUSE ══ */
+const TIMER_TOTAL = 30;
+const CIRCUNF = 2 * Math.PI * 20;
+
+function toggleTimer() {
+  if (timerActivo) {
+    // Pausar
+    timerActivo = false;
+    stopTimer();
+  } else {
+    // Activar / reanudar
+    timerActivo = true;
+    if (!esperandoNext) startTimer();
+  }
+  actualizarBtnTimer();
+}
+
+function actualizarBtnTimer() {
+  const btn = document.getElementById('btn-timer-toggle');
+  const icon = document.getElementById('timer-toggle-icon');
+  const label = document.getElementById('timer-toggle-label');
+  if (timerActivo) {
+    btn.classList.add('active');
+    icon.textContent = 'pause_circle';
+    label.textContent = 'Pausar contador';
+  } else {
+    btn.classList.remove('active');
+    icon.textContent = 'play_circle';
+    label.textContent = 'Activar contador';
+  }
+}
 
 function startTimer() {
+  stopTimer();
   timerSeg = TIMER_TOTAL;
   updateTimerUI(timerSeg);
   timerInterval = setInterval(() => {
@@ -985,6 +1092,11 @@ function stopTimer() {
   timerInterval = null;
 }
 
+function resetTimerUI() {
+  timerSeg = TIMER_TOTAL;
+  updateTimerUI(TIMER_TOTAL);
+}
+
 function updateTimerUI(seg) {
   document.getElementById('timer-num').textContent = seg;
   const bar = document.getElementById('timer-bar');
@@ -996,7 +1108,6 @@ function updateTimerUI(seg) {
 function tiempoAgotado() {
   if (esperandoNext) return;
   esperandoNext = true;
-  // marcar pregunta como incorrecta
   document.querySelectorAll('.opt-btn').forEach(b => {
     if (parseInt(b.textContent) === retosRonda[preguntaIdx].correcta) b.className='opt-btn correct';
     else b.className='opt-btn wrong';
@@ -1007,7 +1118,7 @@ function tiempoAgotado() {
   registrarRespuesta(false);
 }
 
-/* ── RESPONDER ── */
+/* ══ RESPONDER ══ */
 function responder(valor) {
   if (esperandoNext) return;
   esperandoNext = true;
@@ -1045,6 +1156,7 @@ function registrarRespuesta(ok) {
 }
 
 function finalizarRonda() {
+  stopTimer();
   const correctas = respuestasRonda.filter(Boolean).length;
   const aprobado  = correctas >= 2;
   const fb = document.getElementById('feedback');
@@ -1068,8 +1180,6 @@ function finalizarRonda() {
   document.querySelectorAll('.opt-btn').forEach(b => b.disabled=true);
 }
 
-/* Al fallar el reto: regresa a Fase A — Misión sorteando de nuevo
-   columna de inicio y posición de virus, para ambas categorías */
 function volverAFaseAConSorteo() {
   document.getElementById('hackeo-banner').style.display = 'none';
   virusPositions = ['B2','C4'];
@@ -1085,7 +1195,7 @@ function reiniciarReto() {
   iniciarReto();
 }
 
-/* ── UTILS ── */
+/* ══ UTILS ══ */
 function shuffle(arr) {
   for (let i=arr.length-1;i>0;i--) {
     const j=Math.floor(Math.random()*(i+1));
@@ -1099,6 +1209,7 @@ function reiniciar() {
   usadosReto = [];
   virusPositions = ['B2','C4'];
   virusEleccion = [];
+  timerActivo = false;
   document.getElementById('ruta-box').classList.remove('visible');
   document.getElementById('ruta-icon').textContent = 'lock';
   document.getElementById('ruta-label').textContent = 'Staff — mostrar ruta sugerida';
