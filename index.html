@@ -16,8 +16,6 @@
   --secondary-container:rgba(167,139,250,0.22);
   --tertiary:#fbbf24; --tertiary-dark:#fde68a; --on-tertiary:#fffbeb;
   --tertiary-container:rgba(251,191,36,0.20);
-  --mixto:#f472b6; --mixto-dark:#fbcfe8; --on-mixto:#fff0f7;
-  --mixto-container:rgba(244,114,182,0.22);
   --error:#fb7185; --error-container:rgba(248,113,113,0.22); --on-error:#fff1f2;
   --surface:rgba(8,10,22,0.82); --surface-high:rgba(20,22,40,0.85);
   --on-surface:#f1f4fb; --on-surface-var:#c7cbe0;
@@ -81,8 +79,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 }
 .badge-green  { background:var(--primary-container);   color:var(--on-primary);   border-color:var(--primary); }
 .badge-purple { background:var(--secondary-container); color:var(--on-secondary); border-color:var(--secondary); }
-.badge-pink   { background:var(--mixto-container);     color:var(--on-mixto);     border-color:var(--mixto); }
-.badge-amber  { background:var(--tertiary-container);  color:var(--on-tertiary);  border-color:var(--tertiary); }
 .badge-phase  { background:var(--surface-high); color:var(--on-surface-var); border-color:var(--outline); }
 
 .btn {
@@ -113,32 +109,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   display:flex; align-items:center; justify-content:center;
   margin:0 auto 1.5rem; font-size:86px;
 }
-/* 3-column grid for category selection */
-.cat-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; width:100%; max-width:720px; }
-@media(max-width:600px){ .cat-grid { grid-template-columns:1fr; } }
-.cat-btn {
-  border:2px solid; border-bottom-width:5px; border-radius:16px;
-  padding:1.5rem 1rem; cursor:pointer; text-align:center;
-  transition:transform .08s, border-bottom-width .08s;
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-  font-family:'Plus Jakarta Sans',sans-serif;
-}
-.cat-btn:active { transform:translateY(3px); border-bottom-width:2px; }
-.cat-alfa  { background:rgba(251,146,60,0.18); border-color:#fb923c; backdrop-filter: blur(4px); }
-.cat-alfa:hover  { background:rgba(251,146,60,0.30); }
-.cat-beta  { background:var(--secondary-container); border-color:var(--secondary-dark); backdrop-filter: blur(4px); }
-.cat-beta:hover  { background:rgba(192,132,252,0.32); }
-.cat-mixto { background:var(--mixto-container); border-color:var(--mixto-dark); backdrop-filter: blur(4px); }
-.cat-mixto:hover { background:rgba(244,114,182,0.32); }
-.cat-btn .cat-icon { font-size:44px; line-height:1; }
-.cat-btn .cat-name { font-size:17px; font-weight:800; }
-.cat-btn .cat-age  { font-size:12px; font-weight:700; opacity:.85; font-family:'Space Grotesk',sans-serif; }
-.cat-alfa .cat-name  { color:#ffd9b3; }
-.cat-alfa .cat-age   { color:#ffb877; }
-.cat-beta .cat-name  { color:var(--on-secondary); }
-.cat-beta .cat-age   { color:var(--secondary-dark); }
-.cat-mixto .cat-name { color:var(--on-mixto); }
-.cat-mixto .cat-age  { color:var(--mixto-dark); }
 
 /* ════════ P2 — MISIÓN ════════ */
 .phase-header {
@@ -289,22 +259,10 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 .feedback-ok { color:var(--on-primary); }
 .feedback-ko { color:var(--on-error); }
 
-/* Timer row with play/pause toggle */
+/* Timer */
 .timer-row {
   display:flex; align-items:center; gap:14px; margin-bottom:.5rem;
 }
-.timer-toggle-btn {
-  background:var(--surface-high); border:2px solid var(--outline); border-bottom-width:4px;
-  border-radius:12px; padding:8px 14px; cursor:pointer;
-  font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700;
-  color:var(--on-surface-var); display:flex; align-items:center; gap:6px;
-  transition:all .12s;
-}
-.timer-toggle-btn:hover { border-color:var(--tertiary); color:var(--tertiary); }
-.timer-toggle-btn.active { border-color:var(--primary); color:var(--primary); background:var(--primary-container); }
-.timer-toggle-btn:active { transform:translateY(2px); border-bottom-width:2px; }
-.timer-toggle-btn .icon { font-size:18px; }
-
 .timer-ring { transform:rotate(0deg); }
 .timer-ring-track { fill:none; stroke:#e5e7eb; stroke-width:5; }
 .timer-ring-bar   { fill:none; stroke:var(--primary); stroke-width:5; stroke-linecap:round;
@@ -372,20 +330,11 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 }
 .stars-row { display:flex; justify-content:center; gap:8px; margin-top:1rem; }
 .star { font-size:34px; animation:pulse-glow 2s ease-in-out infinite; }
-
-/* Mixto level tag on question */
-.level-tag {
-  display:inline-flex; align-items:center; gap:4px;
-  padding:2px 10px; border-radius:999px; font-size:11px; font-weight:800;
-  font-family:'Space Grotesk',sans-serif; margin-bottom:6px; border:1.5px solid;
-}
-.level-alfa { background:rgba(251,146,60,0.22); color:#ffd9b3; border-color:#fb923c; }
-.level-beta { background:var(--secondary-container); color:var(--on-secondary); border-color:var(--secondary); }
 </style>
 </head>
 <body>
 
-<div id="bg-layer" data-img="0"></div>
+<div id="bg-layer"></div>
 <div id="confetti-global"></div>
 
 <!-- ══ P1 — BIENVENIDA ══ -->
@@ -397,25 +346,12 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   <h1 style="color:var(--on-secondary);text-align:center;margin-bottom:1.75rem">Algoritmos</h1>
   <div class="robot-circle" aria-hidden="true">🤖</div>
   <p style="text-align:center;max-width:480px;margin-bottom:2rem">
-    ¡Bienvenidas, ingenieras! Seleccionen la categoría de su equipo.
+    ¡Bienvenidas, ingenieras!
   </p>
-  <div class="cat-grid">
-    <button class="cat-btn cat-alfa" onclick="elegirCategoria('alfa')">
-      <span class="cat-icon">⭐</span>
-      <span class="cat-name">Categoría Alfa</span>
-      <span class="cat-age">6 – 8 años</span>
-    </button>
-    <button class="cat-btn cat-mixto" onclick="elegirCategoria('mixto')">
-      <span class="cat-icon">🌟</span>
-      <span class="cat-name">Categoría Mixto</span>
-      <span class="cat-age">6 – 12 años</span>
-    </button>
-    <button class="cat-btn cat-beta" onclick="elegirCategoria('beta')">
-      <span class="cat-icon">🚀</span>
-      <span class="cat-name">Categoría Beta</span>
-      <span class="cat-age">9 – 12 años</span>
-    </button>
-  </div>
+  <button class="btn btn-primary" onclick="iniciarJuego()" style="font-size:20px;padding:16px 40px">
+    <span class="icon" style="font-size:22px">rocket_launch</span> Comenzar — Categoría Beta
+  </button>
+  <p style="margin-top:1rem;font-size:14px;color:var(--on-surface-var);font-family:'Space Grotesk',sans-serif;font-weight:700">9 – 12 años</p>
 </div>
 
 <!-- ══ P2 — MISIÓN ══ -->
@@ -424,7 +360,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
     <div class="phase-header">
       <h2>Fase A — Misión</h2>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span id="badge-cat" class="badge badge-green font-code">Categoría Alfa</span>
+        <span class="badge badge-purple font-code">🚀 Categoría Beta</span>
         <span class="badge badge-phase font-code"><span class="icon" style="font-size:13px">hub</span> Lógica Secuencial</span>
       </div>
     </div>
@@ -567,7 +503,7 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
   <span class="badge badge-phase font-code" style="margin-bottom:.5rem">
     <span class="icon" style="font-size:13px">edit_note</span> Fase C — Código matemático
   </span>
-  <span id="reto-cat-badge" class="badge badge-green font-code" style="margin-bottom:1rem">Categoría Alfa</span>
+  <span class="badge badge-purple font-code" style="margin-bottom:1rem">🚀 Categoría Beta</span>
 
   <div class="progress-row" id="progress-row">
     <div class="prog-dot pending" id="dot-0">1</div>
@@ -575,17 +511,13 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
     <div class="prog-dot pending" id="dot-2">3</div>
   </div>
 
-  <!-- Timer row: ring + play/pause toggle -->
-  <div class="timer-row" id="timer-wrap" style="display:none">
+  <!-- Timer -->
+  <div class="timer-row" id="timer-wrap">
     <svg width="120" height="120" class="timer-ring" viewBox="0 0 46 46">
       <circle class="timer-ring-track" cx="23" cy="23" r="20"/>
       <circle class="timer-ring-bar" id="timer-bar" cx="23" cy="23" r="20"/>
       <text class="timer-num" id="timer-num" x="23" y="23">30</text>
     </svg>
-    <button class="timer-toggle-btn" id="btn-timer-toggle" onclick="toggleTimer()">
-      <span class="icon" id="timer-toggle-icon">play_circle</span>
-      <span id="timer-toggle-label">Activar contador</span>
-    </button>
   </div>
 
   <div class="hackeo-banner" id="hackeo-banner" style="display:none">
@@ -596,7 +528,6 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 
   <div class="notebook-frame">
     <p class="notebook-label">&gt; PREGUNTA_DEL_DÍA</p>
-    <div id="level-tag-wrap"></div>
     <p id="reto-titulo" style="font-size:12px;color:var(--on-surface-var);margin-bottom:5px;font-family:'Space Grotesk',sans-serif;font-weight:700"></p>
     <p class="reto-question" id="reto-pregunta"></p><span class="cursor">_</span>
   </div>
@@ -635,78 +566,37 @@ p  { font-size:18px; font-weight:500; line-height:1.6; }
 
 <script>
 /* ══════════════════════════════════
-   BANCO DE PREGUNTAS
+   BANCO DE PREGUNTAS — SOLO BETA
 ══════════════════════════════════ */
-const RETOS = {
-  alfa: [
-    // Preguntas originales
-    {titulo:"Reto de las figuras",       pregunta:"Sumen los lados de un triángulo (3) más los lados de un cuadrado (4). ¿Cuál es el número secreto?", correcta:7,  opciones:[5,7,9]},
-    {titulo:"Reto de la dulcería",        pregunta:"El sistema tiene 9 archivos y borramos 4 con virus. ¿Cuántos archivos limpios quedan?",              correcta:5,  opciones:[4,5,6]},
-    {titulo:"Reto del conteo rápido",     pregunta:"Completen la serie: 2, 4, 6, [ ? ], 10. ¿Qué número falta?",                                        correcta:8,  opciones:[7,8,9]},
-    {titulo:"Reto de las patas",          pregunta:"En una granja digital hay 2 vacas y 1 gallina. ¿Cuántas patas hay en total?",                         correcta:10, opciones:[8,10,12]},
-    {titulo:"Reto del revés",             pregunta:"A las dos decenas (20) le quitamos 5 unidades. ¿Con qué número nos quedamos?",                        correcta:15, opciones:[14,15,16]},
-    {titulo:"Reto de los dados",          pregunta:"Un dado cayó en 6 y otro en 5. ¿Cuál es la contraseña?",                                             correcta:11, opciones:[10,11,12]},
-    {titulo:"Reto de los insectos",       pregunta:"Una araña tiene 8 patas y una hormiga tiene 6. ¿Cuántas patas tienen juntas?",                        correcta:14, opciones:[12,14,16]},
-    {titulo:"Reto de la serie 5 en 5",   pregunta:"Encuentren el número escondido: 5, 10, 15, [ ? ], 25.",                                              correcta:20, opciones:[18,20,22]},
-    {titulo:"Reto de las manos",          pregunta:"Los 10 dedos de una niña más los 5 dedos de una mano de su compañera. ¿Cuántos dedos hay en total?", correcta:15, opciones:[13,15,20]},
-    {titulo:"Reto del doble",             pregunta:"El código secreto es el doble del número 9. ¿Qué número deben escribir?",                             correcta:18, opciones:[16,18,20]},
-    // Preguntas nuevas del PDF
-    {titulo:"Reto de la suma",        pregunta:"5 + 5 = ?",                                                                                          correcta:10, opciones:[9,10,11]},
-    {titulo:"Reto de la resta",           pregunta:"8 − 3 = ?",                                                                                          correcta:5,  opciones:[4,5,6]},
-    {titulo:"Reto de la suma",              pregunta:"6 + 2 = ?",                                                                                           correcta:8,  opciones:[7,8,9]},
-    {titulo:"Reto de la resta",     pregunta:"10 − 4 = ?",                                                                                          correcta:6,  opciones:[5,6,7]},
-    {titulo:"Reto de la suma",              pregunta:"3 + 4 = ?",                                                                                           correcta:7,  opciones:[6,7,8]},
-    {titulo:"Reto de la resta",      pregunta:"7 − 2 = ?",                                                                                           correcta:5,  opciones:[4,5,6]},
-    {titulo:"Reto de la suma",              pregunta:"9 + 3 = ?",                                                                                           correcta:12, opciones:[11,12,13]},
-    {titulo:"Reto de la resta",     pregunta:"12 − 5 = ?",                                                                                          correcta:7,  opciones:[6,7,8]},
-    {titulo:"Reto de la suma",              pregunta:"4 + 4 = ?",                                                                                           correcta:8,  opciones:[7,8,9]},
-    {titulo:"Reto de la resta",    pregunta:"15 − 10 = ?",                                                                                         correcta:5,  opciones:[5,10,15]},
-    {titulo:"Reto del cuadrado",         pregunta:"¿Cuántos lados tiene un cuadrado?",                                                                    correcta:4,  opciones:[3,4,5]},
-    {titulo:"Reto del triángulo",        pregunta:"¿Cuántas esquinas (vértices) tiene un triángulo?",                                                     correcta:3,  opciones:[2,3,4]},
-    {titulo:"Reto de serie",    pregunta:"Completa la serie: 2, 4, 6, __, 10.",                                                                 correcta:8,  opciones:[7,8,9]},
-    {titulo:"Reto de serie",  pregunta:"Completa la serie: 5, 10, 15, __, 25.",                                                               correcta:20, opciones:[16,20,30]},
-    {titulo:"Reto del doble de 3",       pregunta:"¿Qué número es el doble de 3?",                                                                       correcta:6,  opciones:[5,6,9]}
-  ],
-  beta: [
-    // Preguntas originales
-    {titulo:"Reto de la serie",             pregunta:"Parcheen la red: 3, 6, 9, [ ? ], 15, 18. ¿Qué número falta?",                                        correcta:12, opciones:[10,11,12]},
-    {titulo:"Reto de las mitades",          pregunta:"El servidor tiene 100 gigas. El sistema usa 50 y los juegos usan 25. ¿Cuántos gigas libres quedan?",  correcta:25, opciones:[20,25,30]},
-    {titulo:"Reto del reparto",             pregunta:"45 contraseñas entre 5 carpetas en partes iguales. ¿Cuántas van en cada carpeta?",                    correcta:9,  opciones:[7,9,11]},
-    {titulo:"Reto del siglo",               pregunta:"Un siglo tiene 100 años. La universidad cumple la cuarta parte. ¿Cuántos años festeja?",               correcta:25, opciones:[20,25,50]},
-    {titulo:"Reto de los chocolates",       pregunta:"6 paquetes con 8 chocolates cada uno. ¿Cuántos chocolates hay en total?",                             correcta:48, opciones:[42,48,56]},
-    {titulo:"Reto de las horas",            pregunta:"El reloj marca las 11:45 a.m. ¿Cuántos minutos faltan para las 12:00?",                               correcta:15, opciones:[10,15,20]},
-    {titulo:"Reto del triple",              pregunta:"Para desactivar la alarma: el triple de 15.",                                                          correcta:45, opciones:[30,45,60]},
-    {titulo:"Reto de las manzanas",         pregunta:"Hay 12 manzanas. El equipo se come la mitad y regala 2 más. ¿Cuántas quedan?",                        correcta:4,  opciones:[4,6,8]},
-    {titulo:"Reto de la cuenta regresiva",  pregunta:"Completen la serie: 40, 32, 24, [ ? ], 8. ¿Qué número falta?",                                       correcta:16, opciones:[14,16,18]},
-    {titulo:"Reto del número misterioso",   pregunta:"Piensen en un número: multiplicado por 4 da 36. ¿De qué número se trata?",                            correcta:9,  opciones:[7,8,9]},
-    // Preguntas nuevas del PDF
-    {titulo:"Reto de multiplicación",                    pregunta:"7 × 6 = ?",                                                                                            correcta:42, opciones:[36,42,48]},
-    {titulo:"Reto de división",                   pregunta:"32 ÷ 8 = ?",                                                                                           correcta:4,  opciones:[3,4,5]},
-    {titulo:"Reto de multiplicación",                    pregunta:"9 × 5 = ?",                                                                                            correcta:45, opciones:[40,45,50]},
-    {titulo:"Reto de división",                   pregunta:"54 ÷ 6 = ?",                                                                                           correcta:9,  opciones:[7,9,11]},
-    {titulo:"Reto de multiplicación",                   pregunta:"12 × 4 = ?",                                                                                           correcta:48, opciones:[42,48,56]},
-    {titulo:"Reto de división",                  pregunta:"100 ÷ 5 = ?",                                                                                          correcta:20, opciones:[15,20,25]},
-    {titulo:"Reto de la serie",     pregunta:"Completa la serie: 4, 8, 12, __, 20.",                                                                 correcta:16, opciones:[14,16,18]},
-    {titulo:"Reto serie regresiva 30,25",  pregunta:"Completa la serie hacia atrás: 30, 25, 20, __, 10.",                                                   correcta:15, opciones:[12,15,18]},
-    {titulo:"Reto de la mitad de 80",      pregunta:"¿Cuánto es la mitad de 80?",                                                                           correcta:40, opciones:[35,40,45]},
-    {titulo:"Reto de la tercera parte",    pregunta:"¿Cuánto es la tercera parte de 30?",                                                                   correcta:10, opciones:[8,10,12]},
-    {titulo:"Reto de las monedas",         pregunta:"Si tengo 3 monedas de $10 y 4 monedas de $5, ¿cuánto dinero tengo?",                                  correcta:50, opciones:[40,50,60]},
-    {titulo:"Reto del cuarto de hora",     pregunta:"¿Cuántos minutos hay en un cuarto de hora (1/4 de hora)?",                                             correcta:15, opciones:[10,15,20]},
-    {titulo:"Reto del área",               pregunta:"Si un rectángulo mide 5 cm de base y 3 cm de altura, ¿cuál es su área?",                               correcta:15, opciones:[10,15,20]},
-    {titulo:"Reto del triple misterioso",  pregunta:"El triple de un número es 21. ¿Cuál es ese número?",                                                   correcta:7,  opciones:[6,7,8]},
-    {titulo:"Reto de suma y resta",              pregunta:"15 + 15 − 10 = ?",                                                                                     correcta:20, opciones:[15,20,25]}
-  ]
-};
-
-// Mixto: mezcla aleatoria de preguntas de ambas categorías, con etiqueta de nivel
-function generarBancoMixto() {
-  const alfaTag = RETOS.alfa.map(r => ({...r, nivel:'alfa'}));
-  const betaTag = RETOS.beta.map(r => ({...r, nivel:'beta'}));
-  return shuffle([...alfaTag, ...betaTag]);
-}
+const RETOS_BETA = [
+  {titulo:"Reto de la serie",             pregunta:"Parcheen la red: 3, 6, 9, [ ? ], 15, 18. ¿Qué número falta?",                                        correcta:12, opciones:[10,11,12]},
+  {titulo:"Reto de las mitades",          pregunta:"El servidor tiene 100 gigas. El sistema usa 50 y los juegos usan 25. ¿Cuántos gigas libres quedan?",  correcta:25, opciones:[20,25,30]},
+  {titulo:"Reto del reparto",             pregunta:"45 contraseñas entre 5 carpetas en partes iguales. ¿Cuántas van en cada carpeta?",                    correcta:9,  opciones:[7,9,11]},
+  {titulo:"Reto del siglo",               pregunta:"Un siglo tiene 100 años. La universidad cumple la cuarta parte. ¿Cuántos años festeja?",               correcta:25, opciones:[20,25,50]},
+  {titulo:"Reto de los chocolates",       pregunta:"6 paquetes con 8 chocolates cada uno. ¿Cuántos chocolates hay en total?",                             correcta:48, opciones:[42,48,56]},
+  {titulo:"Reto de las horas",            pregunta:"El reloj marca las 11:45 a.m. ¿Cuántos minutos faltan para las 12:00?",                               correcta:15, opciones:[10,15,20]},
+  {titulo:"Reto del triple",              pregunta:"Para desactivar la alarma: el triple de 15.",                                                          correcta:45, opciones:[30,45,60]},
+  {titulo:"Reto de las manzanas",         pregunta:"Hay 12 manzanas. El equipo se come la mitad y regala 2 más. ¿Cuántas quedan?",                        correcta:4,  opciones:[4,6,8]},
+  {titulo:"Reto de la cuenta regresiva",  pregunta:"Completen la serie: 40, 32, 24, [ ? ], 8. ¿Qué número falta?",                                       correcta:16, opciones:[14,16,18]},
+  {titulo:"Reto del número misterioso",   pregunta:"Piensen en un número: multiplicado por 4 da 36. ¿De qué número se trata?",                            correcta:9,  opciones:[7,8,9]},
+  {titulo:"Reto de multiplicación",       pregunta:"7 × 6 = ?",                                                                                           correcta:42, opciones:[36,42,48]},
+  {titulo:"Reto de división",             pregunta:"32 ÷ 8 = ?",                                                                                           correcta:4,  opciones:[3,4,5]},
+  {titulo:"Reto de multiplicación",       pregunta:"9 × 5 = ?",                                                                                           correcta:45, opciones:[40,45,50]},
+  {titulo:"Reto de división",             pregunta:"54 ÷ 6 = ?",                                                                                           correcta:9,  opciones:[7,9,11]},
+  {titulo:"Reto de multiplicación",       pregunta:"12 × 4 = ?",                                                                                          correcta:48, opciones:[42,48,56]},
+  {titulo:"Reto de división",             pregunta:"100 ÷ 5 = ?",                                                                                         correcta:20, opciones:[15,20,25]},
+  {titulo:"Reto de la serie",             pregunta:"Completa la serie: 4, 8, 12, __, 20.",                                                                correcta:16, opciones:[14,16,18]},
+  {titulo:"Reto serie regresiva",         pregunta:"Completa la serie hacia atrás: 30, 25, 20, __, 10.",                                                   correcta:15, opciones:[12,15,18]},
+  {titulo:"Reto de la mitad de 80",       pregunta:"¿Cuánto es la mitad de 80?",                                                                          correcta:40, opciones:[35,40,45]},
+  {titulo:"Reto de la tercera parte",     pregunta:"¿Cuánto es la tercera parte de 30?",                                                                  correcta:10, opciones:[8,10,12]},
+  {titulo:"Reto de las monedas",          pregunta:"Si tengo 3 monedas de $10 y 4 monedas de $5, ¿cuánto dinero tengo?",                                 correcta:50, opciones:[40,50,60]},
+  {titulo:"Reto del cuarto de hora",      pregunta:"¿Cuántos minutos hay en un cuarto de hora (1/4 de hora)?",                                            correcta:15, opciones:[10,15,20]},
+  {titulo:"Reto del área",                pregunta:"Si un rectángulo mide 5 cm de base y 3 cm de altura, ¿cuál es su área?",                              correcta:15, opciones:[10,15,20]},
+  {titulo:"Reto del triple misterioso",   pregunta:"El triple de un número es 21. ¿Cuál es ese número?",                                                  correcta:7,  opciones:[6,7,8]},
+  {titulo:"Reto de suma y resta",         pregunta:"15 + 15 − 10 = ?",                                                                                    correcta:20, opciones:[15,20,25]}
+];
 
 /* ══ ESTADO ══ */
-let categoria = 'alfa';
 let virusPositions = ['B2','C4'];
 let virusMode = 'random';
 let usadosReto = [];
@@ -716,8 +606,7 @@ let respuestasRonda = [];
 let timerInterval = null;
 let timerSeg = 30;
 let esperandoNext = false;
-let timerActivo = false;    // si el contador está corriendo (solo beta/mixto)
-let timerEnPausa = false;   // si el usuario lo pausó manualmente
+let columnaInicio = 1;
 
 /* ══ CONFETTI ══ */
 (function initConfetti() {
@@ -741,32 +630,18 @@ function irA(id) {
   window.scrollTo(0,0);
 }
 
-/* ══ CATEGORÍA ══ */
-function elegirCategoria(cat) {
-  categoria = cat;
+/* ══ INICIO ══ */
+function iniciarJuego() {
   usadosReto = [];
-  const badge = document.getElementById('badge-cat');
-  if (cat==='alfa') {
-    badge.textContent = '⭐ Categoría Alfa — 6 a 8 años';
-    badge.className = 'badge badge-green font-code';
-  } else if (cat==='beta') {
-    badge.textContent = '🚀 Categoría Beta — 9 a 12 años';
-    badge.className = 'badge badge-purple font-code';
-  } else {
-    badge.textContent = '🌟 Categoría Mixto — 6 a 12 años';
-    badge.className = 'badge badge-pink font-code';
-  }
+  virusPositions = ['B2','C4'];
   document.getElementById('ruta-box').classList.remove('visible');
   document.getElementById('ruta-icon').textContent = 'lock';
   document.getElementById('ruta-label').textContent = 'Staff — mostrar ruta sugerida';
-  virusPositions = ['B2','C4'];
   setMode('random');
   construirMiniTablero();
   asignarInicioAleatorio();
   irA('s-mision');
 }
-
-let columnaInicio = 1;
 
 function asignarInicioAleatorio() {
   columnaInicio = Math.floor(Math.random() * 5) + 1;
@@ -917,12 +792,12 @@ function construirTablero() {
       const coord = f+c;
       const cell = document.createElement('div');
       const isStartCell = coord === 'A'+columnaInicio;
-      if      (coord==='E5')                   cell.className='cell end';
+      if      (coord==='E5')                    cell.className='cell end';
       else if (virusPositions.includes(coord))  cell.className='cell virus';
       else if (isStartCell)                     cell.className='cell start';
       else if (rutaSet.has(coord))              cell.className='cell path';
       else                                      cell.className='cell';
-      if      (coord==='E5')                   cell.textContent='META';
+      if      (coord==='E5')                    cell.textContent='META';
       else if (virusPositions.includes(coord))  cell.textContent='☠';
       else                                      cell.textContent=coord;
       t.appendChild(cell);
@@ -930,148 +805,9 @@ function construirTablero() {
   });
 }
 
-/* ══ RETO: INICIO ══ */
-function iniciarReto() {
-  preguntaIdx = 0;
-  respuestasRonda = [];
-  timerEnPausa = false;
-
-  // Elegir 3 retos
-  let lista;
-  if (categoria === 'mixto') {
-    lista = generarBancoMixto();
-    // usadosReto no aplica igual, reiniciar siempre para mixto
-    usadosReto = [];
-    shuffle(lista);
-    retosRonda = lista.slice(0, 3);
-  } else {
-    lista = RETOS[categoria];
-    if (usadosReto.length + 3 > lista.length) usadosReto = [];
-    const disponibles = lista.map((_,i)=>i).filter(i=>!usadosReto.includes(i));
-    shuffle(disponibles);
-    retosRonda = disponibles.slice(0,3).map(i=>lista[i]);
-    retosRonda.forEach(r => usadosReto.push(lista.indexOf(r)));
-  }
-
-  // Badge
-  const badge = document.getElementById('reto-cat-badge');
-  if (categoria==='alfa') {
-    badge.textContent = '⭐ Categoría Alfa';
-    badge.className = 'badge badge-green font-code';
-  } else if (categoria==='beta') {
-    badge.textContent = '🚀 Categoría Beta';
-    badge.className = 'badge badge-purple font-code';
-  } else {
-    badge.textContent = '🌟 Categoría Mixto';
-    badge.className = 'badge badge-pink font-code';
-  }
-
-  // Timer: visible para beta y mixto
-  const timerWrap = document.getElementById('timer-wrap');
-  if (categoria === 'alfa') {
-    timerWrap.style.display = 'none';
-  } else if (categoria === 'beta') {
-    // Beta: timer arranca solo, sin botón play/pausa
-    timerWrap.style.display = 'flex';
-    timerActivo = true;
-    document.getElementById('btn-timer-toggle').style.display = 'none';
-    resetTimerUI();
-  } else {
-    // Mixto: timer inicia pausado, staff lo activa
-    timerWrap.style.display = 'flex';
-    timerActivo = false;
-    document.getElementById('btn-timer-toggle').style.display = 'inline-flex';
-    resetTimerUI();
-    actualizarBtnTimer();
-  }
-
-  // Reset progreso
-  [0,1,2].forEach(i => {
-    const d = document.getElementById('dot-'+i);
-    d.className = 'prog-dot pending';
-    d.textContent = i+1;
-  });
-
-  document.getElementById('hackeo-banner').style.display = 'none';
-  document.getElementById('reto-actions').style.display  = 'none';
-  document.getElementById('btn-completada').style.display = 'none';
-  const btnReintentar0 = document.getElementById('btn-reintentar');
-  btnReintentar0.onclick = reiniciarReto;
-  btnReintentar0.style.display = 'inline-flex';
-
-  irA('s-reto');
-  mostrarPregunta();
-}
-
-function mostrarPregunta() {
-  esperandoNext = false;
-  stopTimer();
-  const reto = retosRonda[preguntaIdx];
-  document.getElementById('reto-titulo').textContent   = reto.titulo;
-  document.getElementById('reto-pregunta').textContent = reto.pregunta;
-  document.getElementById('feedback').textContent      = '';
-  document.getElementById('feedback').className        = 'feedback-msg';
-
-  // Etiqueta de nivel para mixto
-  const tagWrap = document.getElementById('level-tag-wrap');
-  tagWrap.innerHTML = '';
-  if (categoria === 'mixto' && reto.nivel) {
-    const tag = document.createElement('span');
-    tag.className = `level-tag level-${reto.nivel}`;
-    tag.textContent = reto.nivel === 'alfa' ? '⭐ Nivel Alfa (6-8 años)' : '🚀 Nivel Beta (9-12 años)';
-    tagWrap.appendChild(tag);
-  }
-
-  const cont = document.getElementById('opciones-container');
-  cont.innerHTML = '';
-  shuffle([...reto.opciones]).forEach(op => {
-    const b = document.createElement('button');
-    b.className = 'opt-btn';
-    b.textContent = op;
-    b.onclick = () => responder(op);
-    cont.appendChild(b);
-  });
-
-  // Timer por categoría
-  if (categoria === 'beta') {
-    startTimer();
-  } else if (categoria === 'mixto') {
-    if (timerActivo) startTimer();
-    else resetTimerUI();
-  }
-}
-
-/* ══ TIMER: PLAY/PAUSE ══ */
+/* ══ TIMER ══ */
 const TIMER_TOTAL = 30;
 const CIRCUNF = 2 * Math.PI * 20;
-
-function toggleTimer() {
-  if (timerActivo) {
-    // Pausar
-    timerActivo = false;
-    stopTimer();
-  } else {
-    // Activar / reanudar
-    timerActivo = true;
-    if (!esperandoNext) startTimer();
-  }
-  actualizarBtnTimer();
-}
-
-function actualizarBtnTimer() {
-  const btn = document.getElementById('btn-timer-toggle');
-  const icon = document.getElementById('timer-toggle-icon');
-  const label = document.getElementById('timer-toggle-label');
-  if (timerActivo) {
-    btn.classList.add('active');
-    icon.textContent = 'pause_circle';
-    label.textContent = 'Pausar contador';
-  } else {
-    btn.classList.remove('active');
-    icon.textContent = 'play_circle';
-    label.textContent = 'Activar contador';
-  }
-}
 
 function startTimer() {
   stopTimer();
@@ -1090,11 +826,6 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
-}
-
-function resetTimerUI() {
-  timerSeg = TIMER_TOTAL;
-  updateTimerUI(TIMER_TOTAL);
 }
 
 function updateTimerUI(seg) {
@@ -1116,6 +847,56 @@ function tiempoAgotado() {
   fb.textContent = `⏰ ¡Tiempo! La respuesta era ${retosRonda[preguntaIdx].correcta}.`;
   fb.className = 'feedback-msg feedback-ko';
   registrarRespuesta(false);
+}
+
+/* ══ RETO: INICIO ══ */
+function iniciarReto() {
+  preguntaIdx = 0;
+  respuestasRonda = [];
+
+  if (usadosReto.length + 3 > RETOS_BETA.length) usadosReto = [];
+  const disponibles = RETOS_BETA.map((_,i)=>i).filter(i=>!usadosReto.includes(i));
+  shuffle(disponibles);
+  retosRonda = disponibles.slice(0,3).map(i=>RETOS_BETA[i]);
+  retosRonda.forEach(r => usadosReto.push(RETOS_BETA.indexOf(r)));
+
+  [0,1,2].forEach(i => {
+    const d = document.getElementById('dot-'+i);
+    d.className = 'prog-dot pending';
+    d.textContent = i+1;
+  });
+
+  document.getElementById('hackeo-banner').style.display = 'none';
+  document.getElementById('reto-actions').style.display  = 'none';
+  document.getElementById('btn-completada').style.display = 'none';
+  const btnReintentar = document.getElementById('btn-reintentar');
+  btnReintentar.onclick = reiniciarReto;
+  btnReintentar.style.display = 'inline-flex';
+
+  irA('s-reto');
+  mostrarPregunta();
+}
+
+function mostrarPregunta() {
+  esperandoNext = false;
+  stopTimer();
+  const reto = retosRonda[preguntaIdx];
+  document.getElementById('reto-titulo').textContent   = reto.titulo;
+  document.getElementById('reto-pregunta').textContent = reto.pregunta;
+  document.getElementById('feedback').textContent      = '';
+  document.getElementById('feedback').className        = 'feedback-msg';
+
+  const cont = document.getElementById('opciones-container');
+  cont.innerHTML = '';
+  shuffle([...reto.opciones]).forEach(op => {
+    const b = document.createElement('button');
+    b.className = 'opt-btn';
+    b.textContent = op;
+    b.onclick = () => responder(op);
+    cont.appendChild(b);
+  });
+
+  startTimer();
 }
 
 /* ══ RESPONDER ══ */
@@ -1209,7 +990,6 @@ function reiniciar() {
   usadosReto = [];
   virusPositions = ['B2','C4'];
   virusEleccion = [];
-  timerActivo = false;
   document.getElementById('ruta-box').classList.remove('visible');
   document.getElementById('ruta-icon').textContent = 'lock';
   document.getElementById('ruta-label').textContent = 'Staff — mostrar ruta sugerida';
